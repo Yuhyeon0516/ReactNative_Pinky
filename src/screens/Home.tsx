@@ -1,10 +1,11 @@
-import {Text, SafeAreaView} from "react-native";
+import {Text} from "react-native";
 import React from "react";
+import ScreenBase from "../components/common/ScreenBase";
 
 export default function HomeScreen() {
     return (
-        <SafeAreaView>
+        <ScreenBase>
             <Text>Home</Text>
-        </SafeAreaView>
+        </ScreenBase>
     );
 }

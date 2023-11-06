@@ -28,10 +28,8 @@ function App(): JSX.Element {
                             tabBarInactiveTintColor: "black",
                             tabBarStyle: {
                                 paddingTop: 7,
-                                borderTopLeftRadius: 24,
-                                borderTopRightRadius: 24,
-                                borderLeftWidth: 0.2,
-                                borderRightWidth: 0.2,
+                                borderTopLeftRadius: 50,
+                                borderTopRightRadius: 50,
                                 position: "absolute",
                                 overflow: "hidden",
                                 minHeight: 60,

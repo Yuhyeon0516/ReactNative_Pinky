@@ -11,6 +11,7 @@ export default function PinkButton({text}: {text: string}) {
                 borderRadius: 30,
                 alignItems: "center",
                 justifyContent: "center",
+                alignSelf: "center",
             }}>
             <Text
                 style={{

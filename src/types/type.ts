@@ -17,3 +17,9 @@ export type StackParams = {
     AddPromise: undefined;
     AddGroup: undefined;
 };
+
+export type ScreenBaseProps = {
+    children: React.ReactNode;
+    floatButtonShow?: boolean;
+    onClickAdd?: () => void;
+};

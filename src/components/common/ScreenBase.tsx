@@ -2,12 +2,7 @@ import {SafeAreaView, TouchableOpacity} from "react-native";
 import React from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {useBottomTabBarHeight} from "@react-navigation/bottom-tabs";
-
-type ScreenBaseProps = {
-    children: React.ReactNode;
-    floatButtonShow?: boolean;
-    onClickAdd: () => void;
-};
+import {ScreenBaseProps} from "../../types/type";
 
 export default function ScreenBase({
     children,

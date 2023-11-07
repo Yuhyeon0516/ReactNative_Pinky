@@ -6,17 +6,15 @@ import {useBottomTabBarHeight} from "@react-navigation/bottom-tabs";
 type ScreenBaseProps = {
     children: React.ReactNode;
     floatButtonShow?: boolean;
+    onClickAdd: () => void;
 };
 
 export default function ScreenBase({
     children,
     floatButtonShow = true,
+    onClickAdd,
 }: ScreenBaseProps) {
     const tabBarHeight = useBottomTabBarHeight();
-
-    function onClickAdd() {
-        console.log("click");
-    }
 
     return (
         <SafeAreaView

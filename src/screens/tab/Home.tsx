@@ -1,14 +1,16 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {FlatList, RefreshControl, Text, View} from "react-native";
 import React, {useCallback, useState} from "react";
-import ScreenBase from "../components/common/ScreenBase";
-import {PromiseType} from "../types/type";
-import PromiseItem from "../components/home/PromiseItem";
-import Spacer from "../components/common/Spacer";
-import PinkButton from "../components/common/PinkButton";
+import ScreenBase from "../../components/common/ScreenBase";
+import {PromiseType, StackParams} from "../../types/type";
+import PromiseItem from "../../components/home/PromiseItem";
+import Spacer from "../../components/common/Spacer";
+import PinkButton from "../../components/common/PinkButton";
+import {NavigationProp, useNavigation} from "@react-navigation/native";
 
 export default function HomeScreen() {
     const [refreshing, setRefreshing] = useState(false);
+    const navigation = useNavigation<NavigationProp<StackParams>>();
     const promiseList: PromiseType[] = [
         // TODO: server에서 data 불러오는것으로 변경
         // {
@@ -65,8 +67,12 @@ export default function HomeScreen() {
         }, 3000);
     }, []);
 
+    function onClickAdd() {
+        navigation.navigate("AddPromise");
+    }
+
     return (
-        <ScreenBase>
+        <ScreenBase onClickAdd={onClickAdd}>
             {promiseList.length ? (
                 <>
                     <Spacer height={20} />

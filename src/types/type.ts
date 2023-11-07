@@ -11,3 +11,9 @@ export type PromiseType = {
     trackingStartTime: Date;
     trakingEndTime: Date;
 };
+
+export type StackParams = {
+    Main: undefined;
+    AddPromise: undefined;
+    AddGroup: undefined;
+};

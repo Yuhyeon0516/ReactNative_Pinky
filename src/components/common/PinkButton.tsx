@@ -1,9 +1,9 @@
-import {View, Text} from "react-native";
+import {Text, TouchableOpacity} from "react-native";
 import React from "react";
 
 export default function PinkButton({text}: {text: string}) {
     return (
-        <View
+        <TouchableOpacity
             style={{
                 width: 150,
                 height: 50,
@@ -21,6 +21,6 @@ export default function PinkButton({text}: {text: string}) {
                 }}>
                 {text}
             </Text>
-        </View>
+        </TouchableOpacity>
     );
 }

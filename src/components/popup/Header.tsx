@@ -12,17 +12,17 @@ export default function Header({title}: {title: string}) {
     }
 
     return (
-        <TouchableOpacity
-            onPress={onPressBack}
+        <View
             style={{
                 width: "100%",
                 height: 70,
-                backgroundColor: "white",
+                backgroundColor: "whitesmoke",
                 justifyContent: "center",
                 alignItems: "center",
                 position: "relative",
             }}>
-            <View
+            <TouchableOpacity
+                onPress={onPressBack}
                 style={{
                     position: "absolute",
                     left: 0,
@@ -34,7 +34,7 @@ export default function Header({title}: {title: string}) {
                     size={25}
                     color={"black"}
                 />
-            </View>
+            </TouchableOpacity>
 
             <View>
                 <Text
@@ -42,6 +42,6 @@ export default function Header({title}: {title: string}) {
                     {title}
                 </Text>
             </View>
-        </TouchableOpacity>
+        </View>
     );
 }

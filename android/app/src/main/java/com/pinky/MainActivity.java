@@ -1,4 +1,4 @@
-package com.pinky;
+package com.yuhyeon.pinky;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

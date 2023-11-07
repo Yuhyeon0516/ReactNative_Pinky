@@ -16,6 +16,8 @@ export type StackParams = {
     Main: undefined;
     AddPromise: undefined;
     AddGroup: undefined;
+    Register: undefined;
+    Login: undefined;
 };
 
 export type ScreenBaseProps = {

@@ -5,7 +5,7 @@ export default function PinkButton({text}: {text: string}) {
     return (
         <TouchableOpacity
             style={{
-                width: 150,
+                width: "100%",
                 height: 50,
                 backgroundColor: "#e8aced",
                 borderRadius: 30,

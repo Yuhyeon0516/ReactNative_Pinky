@@ -5,9 +5,13 @@ import {useBottomTabBarHeight} from "@react-navigation/bottom-tabs";
 
 type ScreenBaseProps = {
     children: React.ReactNode;
+    floatButtonShow?: boolean;
 };
 
-export default function ScreenBase({children}: ScreenBaseProps) {
+export default function ScreenBase({
+    children,
+    floatButtonShow = true,
+}: ScreenBaseProps) {
     const tabBarHeight = useBottomTabBarHeight();
 
     function onClickAdd() {
@@ -16,23 +20,30 @@ export default function ScreenBase({children}: ScreenBaseProps) {
 
     return (
         <SafeAreaView
-            style={{flex: 1, backgroundColor: "black", position: "relative"}}>
-            <TouchableOpacity
-                onPress={onClickAdd}
-                style={{
-                    position: "absolute",
-                    right: 30,
-                    bottom: tabBarHeight + 30,
-                    backgroundColor: "#e8aced",
-                    width: 50,
-                    height: 50,
-                    borderRadius: 25,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}>
-                <FontAwesome size={30} name="plus" color={"white"} />
-            </TouchableOpacity>
+            style={{
+                flex: 1,
+                backgroundColor: "whitesmoke",
+                position: "relative",
+            }}>
+            {floatButtonShow && (
+                <TouchableOpacity
+                    onPress={onClickAdd}
+                    style={{
+                        position: "absolute",
+                        right: 30,
+                        bottom: tabBarHeight + 30,
+                        backgroundColor: "#e8aced",
+                        width: 50,
+                        height: 50,
+                        borderRadius: 25,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        zIndex: 99,
+                    }}>
+                    <FontAwesome size={30} name="plus" color={"white"} />
+                </TouchableOpacity>
+            )}
             {children}
         </SafeAreaView>
     );

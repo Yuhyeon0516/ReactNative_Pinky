@@ -4,7 +4,7 @@ import ScreenBase from "../components/common/ScreenBase";
 
 export default function SettingScreen() {
     return (
-        <ScreenBase>
+        <ScreenBase floatButtonShow={false}>
             <Text>Setting</Text>
         </ScreenBase>
     );

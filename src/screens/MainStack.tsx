@@ -6,6 +6,7 @@ import AddGroup from "./popup/AddGroup";
 import {StackParams} from "../types/type";
 import Register from "./popup/Register";
 import Login from "./Login";
+import WebViewScreen from "./popup/WebView";
 
 const Stack = createNativeStackNavigator<StackParams>();
 
@@ -36,6 +37,11 @@ export default function MainStack() {
                 <Stack.Screen
                     name="Register"
                     component={Register}
+                    options={{presentation: "modal"}}
+                />
+                <Stack.Screen
+                    name="WebView"
+                    component={WebViewScreen}
                     options={{presentation: "modal"}}
                 />
             </Stack.Group>

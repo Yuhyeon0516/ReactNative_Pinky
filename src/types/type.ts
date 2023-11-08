@@ -18,10 +18,18 @@ export type StackParams = {
     AddGroup: undefined;
     Register: undefined;
     Login: undefined;
+    WebView: {
+        url: string;
+    };
 };
 
 export type ScreenBaseProps = {
     children: React.ReactNode;
     floatButtonShow?: boolean;
     onClickAdd?: () => void;
+};
+
+export type AuthMethodDataType = {
+    state: string;
+    verifier: string;
 };

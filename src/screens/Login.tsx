@@ -1,11 +1,4 @@
-import {
-    View,
-    Text,
-    SafeAreaView,
-    TextInput,
-    Image,
-    TouchableOpacity,
-} from "react-native";
+import {View, Text, SafeAreaView, TextInput} from "react-native";
 import React, {useState} from "react";
 import Spacer from "../components/common/Spacer";
 import PinkButton from "../components/common/PinkButton";

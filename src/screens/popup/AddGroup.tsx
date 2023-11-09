@@ -39,7 +39,9 @@ export default function AddGroup() {
 
                 <Spacer height={15} />
 
-                <PinkButton text="생성하기" />
+                <View style={{width: "50%", alignSelf: "center"}}>
+                    <PinkButton text="생성하기" />
+                </View>
             </ScrollView>
         </View>
     );

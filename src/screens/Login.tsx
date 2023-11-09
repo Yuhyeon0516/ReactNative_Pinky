@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Image,
     ScrollView,
+    KeyboardAvoidingView,
 } from "react-native";
 import React, {useState} from "react";
 import Spacer from "../components/common/Spacer";
@@ -28,7 +29,7 @@ export default function Login() {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <Spacer height={20} />
                 <View
                     style={{
@@ -116,12 +117,12 @@ export default function Login() {
 
                 <Spacer height={20} />
 
-                <View style={{paddingHorizontal: 20}}>
+                <KeyboardAvoidingView style={{paddingHorizontal: 20}}>
                     <PinkButton
                         text="로그인"
                         onPress={() => handleLogin(email, password, navigation)}
                     />
-                </View>
+                </KeyboardAvoidingView>
 
                 <Spacer height={20} />
 

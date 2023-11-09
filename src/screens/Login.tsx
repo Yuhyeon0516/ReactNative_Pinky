@@ -1,14 +1,27 @@
-import {View, Text, SafeAreaView, TextInput} from "react-native";
+import {
+    View,
+    Text,
+    SafeAreaView,
+    TextInput,
+    TouchableOpacity,
+} from "react-native";
 import React, {useState} from "react";
 import Spacer from "../components/common/Spacer";
 import PinkButton from "../components/common/PinkButton";
 import VerticalLine from "../components/common/VerticalLine";
 import Google from "../components/login/Google";
 import Kakao from "../components/login/Kakao";
+import {NavigationProp, useNavigation} from "@react-navigation/native";
+import {StackParams} from "../types/type";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigation = useNavigation<NavigationProp<StackParams>>();
+
+    function onPressRegister() {
+        navigation.navigate("Register");
+    }
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -75,13 +88,27 @@ export default function Login() {
                     justifyContent: "center",
                     gap: 10,
                 }}>
-                <Text style={{color: "gray", fontSize: 14, fontWeight: "bold"}}>
-                    비밀번호 찾기
-                </Text>
+                <TouchableOpacity onPress={() => {}}>
+                    <Text
+                        style={{
+                            color: "gray",
+                            fontSize: 14,
+                            fontWeight: "bold",
+                        }}>
+                        비밀번호 찾기
+                    </Text>
+                </TouchableOpacity>
                 <VerticalLine size={1} />
-                <Text style={{color: "gray", fontSize: 14, fontWeight: "bold"}}>
-                    회원가입
-                </Text>
+                <TouchableOpacity onPress={onPressRegister}>
+                    <Text
+                        style={{
+                            color: "gray",
+                            fontSize: 14,
+                            fontWeight: "bold",
+                        }}>
+                        회원가입
+                    </Text>
+                </TouchableOpacity>
             </View>
 
             <Spacer height={50} />

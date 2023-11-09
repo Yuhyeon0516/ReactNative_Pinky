@@ -1,4 +1,4 @@
-import {NavigationProp} from "@react-navigation/native";
+import {CommonActions, NavigationProp} from "@react-navigation/native";
 import pb from "../../utils/pb";
 import {AuthMethodDataType, StackParams} from "../../types/type";
 
@@ -26,6 +26,12 @@ export async function afterWebViewAction(
                     "http://localhost:3000/auth",
                 );
 
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [{name: "Main"}],
+                }),
+            );
             navigation.navigate("Main");
         } else {
             console.log("not match state");

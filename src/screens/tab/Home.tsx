@@ -120,7 +120,10 @@ export default function HomeScreen() {
                         약속을 잡아주세요!
                     </Text>
                     <Spacer height={30} />
-                    <PinkButton text="약속 잡기" />
+
+                    <View style={{width: "50%"}}>
+                        <PinkButton text="약속 잡기" />
+                    </View>
                 </View>
             )}
         </ScreenBase>

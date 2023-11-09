@@ -45,7 +45,9 @@ export default function GroupScreen() {
                         친구들과 그룹을 만들어볼까요?
                     </Text>
                     <Spacer height={30} />
-                    <PinkButton text="그룹 만들기" />
+                    <View style={{width: "50%"}}>
+                        <PinkButton text="그룹 만들기" />
+                    </View>
                 </View>
             )}
         </ScreenBase>

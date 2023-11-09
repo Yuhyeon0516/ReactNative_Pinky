@@ -1,5 +1,5 @@
 import {SafeAreaView} from "react-native";
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import WebView, {WebViewNavigation} from "react-native-webview";
 import {
     NavigationProp,
@@ -17,9 +17,15 @@ export default function WebViewScreen() {
     const navigation = useNavigation<NavigationProp<StackParams>>();
     const customUserAgent = "Chrome/56.0.0.0 Mobile";
     const [_, setAuthMethod] = useRecoilState(AuthMethodState);
+    const webViewRef = useRef<WebView>(null);
 
     function onNavigationStateChange(navState: WebViewNavigation) {
-        if (navState.url.includes("http://localhost:3000", 0)) {
+        if (
+            navState.url.includes(
+                `http://localhost:3000/${route.params!.provider}/auth`,
+                0,
+            )
+        ) {
             const queryParams = new URL(navState.url).searchParams;
             const code = queryParams.get("code");
             const state = queryParams.get("state");
@@ -37,14 +43,19 @@ export default function WebViewScreen() {
         }
     }
 
+    useEffect(() => {
+        webViewRef.current?.clearCache?.(true);
+        webViewRef.current?.reload();
+        webViewRef.current?.clearHistory?.();
+    }, []);
+
     return (
         <SafeAreaView style={{flex: 1}}>
             <WebView
+                ref={webViewRef}
                 source={{uri: route.params?.url ?? ""}}
                 userAgent={customUserAgent}
                 onNavigationStateChange={onNavigationStateChange}
-                sharedCookiesEnabled
-                thirdPartyCookiesEnabled
             />
         </SafeAreaView>
     );

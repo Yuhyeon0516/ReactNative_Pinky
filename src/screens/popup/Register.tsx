@@ -1,10 +1,77 @@
-import {View, Text} from "react-native";
-import React from "react";
+import {View, SafeAreaView, Alert} from "react-native";
+import React, {useState} from "react";
+import Header from "../../components/popup/Header";
+import Spacer from "../../components/common/Spacer";
+import PinkButton from "../../components/common/PinkButton";
+import RegisterInput from "../../components/register/RegisterInput";
+import pb from "../../utils/pb";
+import {NavigationProp, useNavigation} from "@react-navigation/native";
+import {StackParams} from "../../types/type";
 
 export default function Register() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
+
+    const navigation = useNavigation<NavigationProp<StackParams>>();
+
+    async function onPressRegister() {
+        if (!email) {
+            Alert.alert("이메일을 입력해주세요.");
+            return;
+        }
+
+        if (!password || !passwordConfirm) {
+            Alert.alert("비밀번호를 입력해주세요.");
+            return;
+        }
+
+        if (password !== passwordConfirm) {
+            Alert.alert("비밀번호가 일치하지않습니다.");
+            return;
+        }
+
+        await pb.collection("users").create({
+            email,
+            password,
+            passwordConfirm,
+        });
+
+        navigation.goBack();
+        Alert.alert("회원가입이 완료되었습니다.\n로그인을 시도해주세요.");
+    }
+
     return (
-        <View>
-            <Text>Register</Text>
-        </View>
+        <SafeAreaView style={{flex: 1, backgroundColor: "whitesmoke"}}>
+            <Header title="회원가입" />
+            <RegisterInput
+                secure={false}
+                title="이메일"
+                value={email}
+                onChangeText={setEmail}
+            />
+
+            <Spacer height={20} />
+
+            <RegisterInput
+                title="비밀번호"
+                value={password}
+                onChangeText={setPassword}
+            />
+
+            <Spacer height={20} />
+
+            <RegisterInput
+                title="비밀번호 확인"
+                value={passwordConfirm}
+                onChangeText={setPasswordConfirm}
+            />
+
+            <Spacer height={20} />
+
+            <View style={{paddingHorizontal: 20}}>
+                <PinkButton text="회원가입" onPress={onPressRegister} />
+            </View>
+        </SafeAreaView>
     );
 }

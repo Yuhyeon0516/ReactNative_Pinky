@@ -1,9 +1,15 @@
 import {Text, TouchableOpacity} from "react-native";
 import React from "react";
 
-export default function PinkButton({text}: {text: string}) {
+type PinkButtonProps = {
+    text: string;
+    onPress?: () => void;
+};
+
+export default function PinkButton({text, onPress}: PinkButtonProps) {
     return (
         <TouchableOpacity
+            onPress={onPress}
             style={{
                 width: "100%",
                 height: 50,

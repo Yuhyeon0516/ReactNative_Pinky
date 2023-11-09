@@ -24,6 +24,9 @@ export async function afterWebViewAction(
                     authMethod.code,
                     authMethod.codeVerifier,
                     `http://localhost:3000/${provider}/auth`,
+                    {
+                        nickname: "nick" + Date.now().toString(),
+                    },
                 );
 
             navigation.dispatch(

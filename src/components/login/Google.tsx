@@ -1,43 +1,77 @@
-import {Image, Platform, TouchableOpacity} from "react-native";
-import React, {useCallback} from "react";
+import {Image, TouchableOpacity} from "react-native";
+import React, {useCallback, useEffect} from "react";
 import pb from "../../utils/pb";
 import {NavigationProp, useNavigation} from "@react-navigation/native";
 import {StackParams} from "../../types/type";
+import {useRecoilState} from "recoil";
+import {AuthMethodState} from "../../global/recoil";
 
 export default function Google() {
     const navigation = useNavigation<NavigationProp<StackParams>>();
+    const [authMethod, setAuthMethod] = useRecoilState(AuthMethodState);
+
     const getAuthMethods = useCallback(async () => {
         const auth = await pb.collection("users").listAuthMethods();
         return auth.authProviders[0];
     }, []);
 
-    const onPressGoogle = useCallback(async () => {
+    const afterWebviewAction = useCallback(async () => {
         try {
-            const authMethod = await getAuthMethods();
+            if (authMethod.afterState === authMethod.beforeState) {
+                pb.autoCancellation(false);
+                await pb
+                    .collection("users")
+                    .authWithOAuth2Code(
+                        "google",
+                        authMethod.code,
+                        authMethod.codeVerifier,
+                        "http://localhost:3000/auth",
+                    );
 
-            console.log(authMethod);
-
-            navigation.navigate("WebView", {
-                url: decodeURIComponent(
-                    authMethod.authUrl + "http://localhost:3000/auth",
-                ),
-            });
-
-            // const authData = await pb
-            //     .collection("users")
-            //     .authWithOAuth2Code(
-            //         "google",
-            //         "",
-            //         authMethod.codeVerifier,
-            //         decodeURIComponent(
-            //             authMethod.authUrl + "http://localhost:3000/auth",
-            //         ),
-            //     );
-            // console.log(Platform.OS, authData);
+                navigation.navigate("Main");
+            } else {
+                console.log("not match state");
+            }
         } catch (error: any) {
             console.log(error.originalError);
         }
-    }, [getAuthMethods]);
+    }, [authMethod, navigation]);
+
+    const onPressGoogle = useCallback(async () => {
+        try {
+            const auth = await getAuthMethods();
+
+            setAuthMethod(prev => {
+                return {
+                    ...prev,
+                    codeVerifier: auth.codeVerifier,
+                    beforeState: auth.state,
+                    authUrl: auth.authUrl + "http://localhost:3000/auth",
+                };
+            });
+
+            navigation.navigate("WebView", {
+                url: decodeURIComponent(
+                    auth.authUrl + "http://localhost:3000/auth",
+                ),
+            });
+        } catch (error: any) {
+            console.log(error.originalError);
+        }
+    }, [getAuthMethods, navigation, setAuthMethod]);
+
+    useEffect(() => {
+        navigation.addListener("focus", async () => {
+            if (
+                authMethod.afterState &&
+                authMethod.beforeState &&
+                authMethod.code &&
+                authMethod.codeVerifier
+            ) {
+                await afterWebviewAction();
+            }
+        });
+    }, [afterWebviewAction, navigation, authMethod]);
 
     return (
         <TouchableOpacity

@@ -30,6 +30,9 @@ export type ScreenBaseProps = {
 };
 
 export type AuthMethodDataType = {
-    state: string;
-    verifier: string;
+    beforeState: string;
+    codeVerifier: string;
+    code: string;
+    afterState: string;
+    authUrl: string;
 };

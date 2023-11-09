@@ -20,6 +20,7 @@ export type StackParams = {
     Login: undefined;
     WebView: {
         url: string;
+        provider: string;
     };
 };
 

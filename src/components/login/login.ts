@@ -23,7 +23,7 @@ export async function afterWebViewAction(
                     provider,
                     authMethod.code,
                     authMethod.codeVerifier,
-                    "http://localhost:3000/auth",
+                    `http://localhost:3000/${provider}/auth`,
                 );
 
             navigation.dispatch(

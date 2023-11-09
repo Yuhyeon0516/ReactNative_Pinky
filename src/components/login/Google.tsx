@@ -19,14 +19,15 @@ export default function Google() {
                     ...prev,
                     codeVerifier: auth.codeVerifier,
                     beforeState: auth.state,
-                    authUrl: auth.authUrl + "http://localhost:3000/auth",
+                    authUrl: auth.authUrl + "http://localhost:3000/google/auth",
                 };
             });
 
             navigation.navigate("WebView", {
                 url: decodeURIComponent(
-                    auth.authUrl + "http://localhost:3000/auth",
+                    auth.authUrl + "http://localhost:3000/google/auth",
                 ),
+                provider: "google",
             });
         } catch (error: any) {
             console.log(error.originalError);

@@ -9,11 +9,14 @@ import {
 } from "@react-navigation/native";
 import {StackParams} from "../../types/type";
 import "react-native-url-polyfill/auto";
+import {useRecoilState} from "recoil";
+import {AuthMethodState} from "../../global/recoil";
 
 export default function WebViewScreen() {
     const route = useRoute<RouteProp<StackParams>>();
     const navigation = useNavigation<NavigationProp<StackParams>>();
     const customUserAgent = "Chrome/56.0.0.0 Mobile";
+    const [_, setAuthMethod] = useRecoilState(AuthMethodState);
 
     function onNavigationStateChange(navState: WebViewNavigation) {
         if (navState.url.includes("http://localhost:3000", 0)) {
@@ -21,10 +24,14 @@ export default function WebViewScreen() {
             const code = queryParams.get("code");
             const state = queryParams.get("state");
 
-            //TODO code,state를 Recoil에 저장
             if (code && state) {
-                console.log(code);
-                console.log(state);
+                setAuthMethod(prev => {
+                    return {
+                        ...prev,
+                        afterState: state,
+                        code: code,
+                    };
+                });
                 navigation.goBack();
             }
         }

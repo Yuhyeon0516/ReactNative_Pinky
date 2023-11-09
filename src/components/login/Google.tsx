@@ -1,45 +1,18 @@
 import {Image, TouchableOpacity} from "react-native";
 import React, {useCallback, useEffect} from "react";
-import pb from "../../utils/pb";
 import {NavigationProp, useNavigation} from "@react-navigation/native";
 import {StackParams} from "../../types/type";
 import {useRecoilState} from "recoil";
 import {AuthMethodState} from "../../global/recoil";
+import {afterWebViewAction, getAuthMethods} from "./login";
 
 export default function Google() {
     const navigation = useNavigation<NavigationProp<StackParams>>();
     const [authMethod, setAuthMethod] = useRecoilState(AuthMethodState);
 
-    const getAuthMethods = useCallback(async () => {
-        const auth = await pb.collection("users").listAuthMethods();
-        return auth.authProviders[0];
-    }, []);
-
-    const afterWebviewAction = useCallback(async () => {
-        try {
-            if (authMethod.afterState === authMethod.beforeState) {
-                pb.autoCancellation(false);
-                await pb
-                    .collection("users")
-                    .authWithOAuth2Code(
-                        "google",
-                        authMethod.code,
-                        authMethod.codeVerifier,
-                        "http://localhost:3000/auth",
-                    );
-
-                navigation.navigate("Main");
-            } else {
-                console.log("not match state");
-            }
-        } catch (error: any) {
-            console.log(error.originalError);
-        }
-    }, [authMethod, navigation]);
-
     const onPressGoogle = useCallback(async () => {
         try {
-            const auth = await getAuthMethods();
+            const auth = await getAuthMethods("google");
 
             setAuthMethod(prev => {
                 return {
@@ -58,7 +31,7 @@ export default function Google() {
         } catch (error: any) {
             console.log(error.originalError);
         }
-    }, [getAuthMethods, navigation, setAuthMethod]);
+    }, [navigation, setAuthMethod]);
 
     useEffect(() => {
         navigation.addListener("focus", async () => {
@@ -68,10 +41,10 @@ export default function Google() {
                 authMethod.code &&
                 authMethod.codeVerifier
             ) {
-                await afterWebviewAction();
+                await afterWebViewAction("google", navigation, authMethod);
             }
         });
-    }, [afterWebviewAction, navigation, authMethod]);
+    }, [navigation, authMethod]);
 
     return (
         <TouchableOpacity

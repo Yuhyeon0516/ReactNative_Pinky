@@ -13,6 +13,7 @@ import Google from "../components/login/Google";
 import Kakao from "../components/login/Kakao";
 import {NavigationProp, useNavigation} from "@react-navigation/native";
 import {StackParams} from "../types/type";
+import {handleLogin} from "../utils/pb";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -34,6 +35,7 @@ export default function Login() {
                 </Text>
                 <Spacer height={10} />
                 <TextInput
+                    autoCapitalize="none"
                     keyboardType="email-address"
                     value={email}
                     onChangeText={setEmail}
@@ -57,6 +59,7 @@ export default function Login() {
                 </Text>
                 <Spacer height={10} />
                 <TextInput
+                    autoCapitalize="none"
                     secureTextEntry
                     value={password}
                     onChangeText={setPassword}
@@ -75,7 +78,10 @@ export default function Login() {
             <Spacer height={20} />
 
             <View style={{paddingHorizontal: 20}}>
-                <PinkButton text="로그인" />
+                <PinkButton
+                    text="로그인"
+                    onPress={() => handleLogin(email, password, navigation)}
+                />
             </View>
 
             <Spacer height={20} />

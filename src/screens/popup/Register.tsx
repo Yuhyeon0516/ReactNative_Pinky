@@ -1,4 +1,9 @@
-import {View, SafeAreaView, Alert} from "react-native";
+import {
+    SafeAreaView,
+    Alert,
+    KeyboardAvoidingView,
+    ScrollView,
+} from "react-native";
 import React, {useState} from "react";
 import Header from "../../components/popup/Header";
 import Spacer from "../../components/common/Spacer";
@@ -43,35 +48,35 @@ export default function Register() {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "whitesmoke"}}>
-            <Header title="회원가입" />
-            <RegisterInput
-                secure={false}
-                title="이메일"
-                value={email}
-                onChangeText={setEmail}
-            />
+            <ScrollView style={{flexGrow: 0}} stickyHeaderIndices={[0]}>
+                <Header title="회원가입" />
+                <RegisterInput
+                    secure={false}
+                    title="이메일"
+                    value={email}
+                    onChangeText={setEmail}
+                />
 
+                <Spacer height={20} />
+
+                <RegisterInput
+                    title="비밀번호"
+                    value={password}
+                    onChangeText={setPassword}
+                />
+
+                <Spacer height={20} />
+
+                <RegisterInput
+                    title="비밀번호 확인"
+                    value={passwordConfirm}
+                    onChangeText={setPasswordConfirm}
+                />
+            </ScrollView>
             <Spacer height={20} />
-
-            <RegisterInput
-                title="비밀번호"
-                value={password}
-                onChangeText={setPassword}
-            />
-
-            <Spacer height={20} />
-
-            <RegisterInput
-                title="비밀번호 확인"
-                value={passwordConfirm}
-                onChangeText={setPasswordConfirm}
-            />
-
-            <Spacer height={20} />
-
-            <View style={{paddingHorizontal: 20}}>
+            <KeyboardAvoidingView style={{paddingHorizontal: 20}}>
                 <PinkButton text="회원가입" onPress={onPressRegister} />
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 }

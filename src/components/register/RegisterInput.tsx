@@ -22,6 +22,7 @@ export default function RegisterInput({
             </Text>
             <Spacer height={10} />
             <TextInput
+                autoCapitalize="none"
                 secureTextEntry={secure}
                 value={value}
                 onChangeText={onChangeText}

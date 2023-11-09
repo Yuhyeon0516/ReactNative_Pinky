@@ -16,6 +16,7 @@ export default function Input({
 }: InputProps) {
     return (
         <TextInput
+            autoCapitalize="none"
             keyboardType={keyboardType}
             value={value}
             onChangeText={onChagneText}

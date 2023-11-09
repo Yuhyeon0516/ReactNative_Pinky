@@ -6,12 +6,14 @@ type RegisterInputProps = {
     title: string;
     value: string;
     onChangeText: React.Dispatch<React.SetStateAction<string>>;
+    secure?: boolean;
 };
 
 export default function RegisterInput({
     title,
     value,
     onChangeText,
+    secure = true,
 }: RegisterInputProps) {
     return (
         <View style={{width: "100%", paddingHorizontal: 20}}>
@@ -20,7 +22,7 @@ export default function RegisterInput({
             </Text>
             <Spacer height={10} />
             <TextInput
-                secureTextEntry
+                secureTextEntry={secure}
                 value={value}
                 onChangeText={onChangeText}
                 placeholderTextColor={"gray"}

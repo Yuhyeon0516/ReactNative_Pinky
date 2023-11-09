@@ -6,10 +6,11 @@ import PinkButton from "../../components/common/PinkButton";
 import RegisterInput from "../../components/register/RegisterInput";
 import {NavigationProp, useNavigation} from "@react-navigation/native";
 import {StackParams} from "../../types/type";
-import {onPressRegister} from "../../utils/pb";
+import {handleRegister, onPressNicknameDoubleCheck} from "../../utils/pb";
 
 export default function Register() {
     const [email, setEmail] = useState("");
+    const [nickname, setNickname] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
 
@@ -17,13 +18,27 @@ export default function Register() {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "whitesmoke"}}>
-            <ScrollView style={{flexGrow: 0}} stickyHeaderIndices={[0]}>
+            <ScrollView
+                style={{flexGrow: 0}}
+                stickyHeaderIndices={[0]}
+                showsVerticalScrollIndicator={false}>
                 <Header title="회원가입" />
                 <RegisterInput
                     secure={false}
                     title="이메일"
                     value={email}
                     onChangeText={setEmail}
+                />
+
+                <Spacer height={20} />
+
+                <RegisterInput
+                    secure={false}
+                    title="닉네임"
+                    value={nickname}
+                    onChangeText={setNickname}
+                    showButton
+                    onPressButton={() => onPressNicknameDoubleCheck(nickname)}
                 />
 
                 <Spacer height={20} />
@@ -46,14 +61,15 @@ export default function Register() {
             <KeyboardAvoidingView style={{paddingHorizontal: 20}}>
                 <PinkButton
                     text="회원가입"
-                    onPress={() =>
-                        onPressRegister(
+                    onPress={() => {
+                        handleRegister(
                             email,
+                            nickname,
                             password,
                             passwordConfirm,
                             navigation,
-                        )
-                    }
+                        );
+                    }}
                 />
             </KeyboardAvoidingView>
         </SafeAreaView>

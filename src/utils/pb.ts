@@ -44,8 +44,9 @@ export async function handleLogin(
     }
 }
 
-export async function onPressRegister(
+export async function handleRegister(
     email: string,
+    nickname: string,
     password: string,
     passwordConfirm: string,
     navigation: NavigationProp<StackParams>,
@@ -53,6 +54,11 @@ export async function onPressRegister(
     try {
         if (!email) {
             Alert.alert("이메일을 입력해주세요.");
+            return;
+        }
+
+        if (!nickname) {
+            Alert.alert("닉네임을 입력해주세요.");
             return;
         }
 
@@ -68,6 +74,7 @@ export async function onPressRegister(
 
         await pb.collection("users").create({
             email,
+            nickname,
             password,
             passwordConfirm,
         });
@@ -93,6 +100,24 @@ export async function onPressRegister(
             )
         ) {
             Alert.alert("비밀번호가 8글자를\n초과하여야합니다.");
+        } else if (
+            error?.originalError?.data?.data?.nickname?.message?.includes(
+                "Value must be unique",
+            )
+        ) {
+            Alert.alert("닉네임 중복확인을 해주세요.");
         }
+    }
+}
+
+export async function onPressNicknameDoubleCheck(nickname: string) {
+    const result = await pb.collection("users").getFullList({
+        filter: `(nickname='${nickname}')`,
+    });
+
+    if (!result.length) {
+        Alert.alert("사용 가능한 닉네임입니다.");
+    } else {
+        Alert.alert("이미 사용중인 닉네임입니다.");
     }
 }

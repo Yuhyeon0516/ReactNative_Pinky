@@ -7,10 +7,13 @@ import Spacer from "../../components/common/Spacer";
 import {handleAddGroup} from "../../utils/pb";
 import {NavigationProp, useNavigation} from "@react-navigation/native";
 import {StackParams} from "../../types/type";
+import {useRecoilState} from "recoil";
+import {MyAttendGroupsState} from "../../global/recoil";
 
 export default function AddGroup() {
     const [groupName, setGroupName] = useState("");
     const [maxPersonnel, setMaxPersonnel] = useState("");
+    const [_, setMyAttendGroups] = useRecoilState(MyAttendGroupsState);
 
     const navigation = useNavigation<NavigationProp<StackParams>>();
 
@@ -48,7 +51,12 @@ export default function AddGroup() {
                     <PinkButton
                         text="생성하기"
                         onPress={() =>
-                            handleAddGroup(groupName, maxPersonnel, navigation)
+                            handleAddGroup(
+                                groupName,
+                                maxPersonnel,
+                                navigation,
+                                setMyAttendGroups,
+                            )
                         }
                     />
                 </View>

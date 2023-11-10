@@ -4,6 +4,7 @@ import PB, {AsyncAuthStore} from "pocketbase";
 import {Alert, Platform} from "react-native";
 import eventSource from "react-native-sse";
 import {AuthUserType, GroupType, StackParams} from "../types/type";
+import {SetterOrUpdater} from "recoil";
 
 declare global {
     const EventSource: eventSource;
@@ -134,6 +135,7 @@ export async function handleAddGroup(
     groupName: string,
     maxPersonnel: string,
     navigation: NavigationProp<StackParams>,
+    setGroup: SetterOrUpdater<GroupType[]>,
 ) {
     if (!groupName) {
         Alert.alert("그룹명을 입력해주세요.");
@@ -157,16 +159,16 @@ export async function handleAddGroup(
     const auth = await getMyAuth();
 
     try {
-        await pb.collection("groups").create({
+        const newGroups = (await pb.collection("groups").create({
             groupName,
             maxPersonnel: Number(maxPersonnel),
             currentPersonnel: 1,
             attendUsers: [auth.model.id],
-        });
+        })) as GroupType;
+
+        setGroup(prev => [...prev, newGroups]);
 
         navigation.goBack();
-
-        // TODO: 내 그룹 정보 업데이트해주기
     } catch (error: any) {
         if (
             error?.originalError?.data?.data?.maxPersonnel?.message?.includes(
@@ -184,9 +186,9 @@ export async function handleAddGroup(
 export async function handleGetMyGroup() {
     const auth = await getMyAuth();
 
-    const allGroups = (await pb
-        .collection("groups")
-        .getFullList()) as GroupType[];
+    const allGroups = (await pb.collection("groups").getFullList({
+        sort: "-created",
+    })) as GroupType[];
 
     const myAttendGroups = allGroups.filter(group =>
         group.attendUsers.includes(auth.model.id),

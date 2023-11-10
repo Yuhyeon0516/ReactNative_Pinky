@@ -37,3 +37,20 @@ export type AuthMethodDataType = {
     afterState: string;
     authUrl: string;
 };
+
+export type AuthUserType = {
+    token: string;
+    model: {
+        avatar: string;
+        collectionId: string;
+        collectionName: string;
+        created: string;
+        email: string;
+        emailVisibility: boolean;
+        id: string;
+        nickname: string;
+        updated: string;
+        username: string;
+        verified: boolean;
+    };
+};

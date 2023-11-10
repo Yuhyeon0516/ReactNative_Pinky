@@ -3,7 +3,7 @@ import {CommonActions, NavigationProp} from "@react-navigation/native";
 import PB, {AsyncAuthStore} from "pocketbase";
 import {Alert, Platform} from "react-native";
 import eventSource from "react-native-sse";
-import {StackParams} from "../types/type";
+import {AuthUserType, StackParams} from "../types/type";
 
 declare global {
     const EventSource: eventSource;
@@ -106,6 +106,8 @@ export async function handleRegister(
             )
         ) {
             Alert.alert("닉네임 중복확인을 해주세요.");
+        } else {
+            Alert.alert("알수없는 에러가 발생하였습니다.");
         }
     }
 }
@@ -119,5 +121,58 @@ export async function onPressNicknameDoubleCheck(nickname: string) {
         Alert.alert("사용 가능한 닉네임입니다.");
     } else {
         Alert.alert("이미 사용중인 닉네임입니다.");
+    }
+}
+
+export async function handleAddGroup(
+    groupName: string,
+    maxPersonnel: string,
+    navigation: NavigationProp<StackParams>,
+) {
+    if (!groupName) {
+        Alert.alert("그룹명을 입력해주세요.");
+        return;
+    }
+
+    if (!maxPersonnel) {
+        Alert.alert("최대 인원수를\n입력해주세요.");
+        return;
+    }
+
+    const result = await pb.collection("groups").getFullList({
+        filter: `(groupName='${groupName}')`,
+    });
+
+    if (result.length) {
+        Alert.alert("이미 존재하는\n그룹명입니다.");
+        return;
+    }
+
+    const auth = JSON.parse(
+        (await AsyncStorage.getItem("pb_auth"))!.toString(),
+    ) as AuthUserType;
+
+    try {
+        await pb.collection("groups").create({
+            groupName,
+            maxPersonnel: Number(maxPersonnel),
+            currentPersonnel: 1,
+            attendUsers: [auth.model.id],
+        });
+
+        navigation.goBack();
+
+        // TODO: 내 그룹 정보 업데이트해주기
+    } catch (error: any) {
+        if (
+            error?.originalError?.data?.data?.maxPersonnel?.message?.includes(
+                "Missing required value.",
+            )
+        ) {
+            Alert.alert("최대 인원수는 1~99로\n설정해주세요.");
+            return;
+        }
+
+        Alert.alert("알수없는 에러가 발생하였습니다.");
     }
 }

@@ -3,7 +3,7 @@ import {CommonActions, NavigationProp} from "@react-navigation/native";
 import PB, {AsyncAuthStore} from "pocketbase";
 import {Alert, Platform} from "react-native";
 import eventSource from "react-native-sse";
-import {AuthUserType, StackParams} from "../types/type";
+import {AuthUserType, GroupType, StackParams} from "../types/type";
 
 declare global {
     const EventSource: eventSource;
@@ -124,6 +124,12 @@ export async function onPressNicknameDoubleCheck(nickname: string) {
     }
 }
 
+async function getMyAuth() {
+    return JSON.parse(
+        (await AsyncStorage.getItem("pb_auth"))!.toString(),
+    ) as AuthUserType;
+}
+
 export async function handleAddGroup(
     groupName: string,
     maxPersonnel: string,
@@ -148,9 +154,7 @@ export async function handleAddGroup(
         return;
     }
 
-    const auth = JSON.parse(
-        (await AsyncStorage.getItem("pb_auth"))!.toString(),
-    ) as AuthUserType;
+    const auth = await getMyAuth();
 
     try {
         await pb.collection("groups").create({
@@ -175,4 +179,18 @@ export async function handleAddGroup(
 
         Alert.alert("알수없는 에러가 발생하였습니다.");
     }
+}
+
+export async function handleGetMyGroup() {
+    const auth = await getMyAuth();
+
+    const allGroups = (await pb
+        .collection("groups")
+        .getFullList()) as GroupType[];
+
+    const myAttendGroups = allGroups.filter(group =>
+        group.attendUsers.includes(auth.model.id),
+    );
+
+    return myAttendGroups;
 }

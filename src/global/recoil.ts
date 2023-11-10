@@ -1,5 +1,5 @@
 import {atom} from "recoil";
-import {AuthMethodDataType} from "../types/type";
+import {AuthMethodDataType, GroupType} from "../types/type";
 
 export const AuthMethodState = atom<AuthMethodDataType>({
     key: "AUTHMETHOD",
@@ -10,4 +10,9 @@ export const AuthMethodState = atom<AuthMethodDataType>({
         afterState: "",
         authUrl: "",
     },
+});
+
+export const MyAttendGroupsState = atom<GroupType[]>({
+    key: "MYATTENDGROUPSSTATE",
+    default: [],
 });

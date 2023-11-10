@@ -18,7 +18,7 @@ export default function MainStack() {
         useState<keyof StackParams>("Login");
 
     useEffect(() => {
-        AsyncStorage.removeItem("pb_auth"); // TODO: 나중에 로그인, 회원가입 구현 다 하면 지워야함
+        // AsyncStorage.removeItem("pb_auth"); // TODO: 나중에 로그인, 회원가입 구현 다 하면 지워야함
         AsyncStorage.getAllKeys().then(keys => {
             if (keys.length > 0) {
                 setInitialRouteName("Main");

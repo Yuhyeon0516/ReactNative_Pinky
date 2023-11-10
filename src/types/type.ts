@@ -54,3 +54,23 @@ export type AuthUserType = {
         verified: boolean;
     };
 };
+
+export type GroupType = {
+    id: string;
+    collectionId: string;
+    collectionName: string;
+    created: string;
+    updated: string;
+    groupName: string;
+    maxPersonnel: number;
+    currentPersonnel: number;
+    attendUsers: string[];
+};
+
+export type GetAllGroupType = {
+    page: number;
+    perPage: number;
+    totalPages: number;
+    totalItems: number;
+    items: GroupType[];
+};

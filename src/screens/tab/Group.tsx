@@ -5,11 +5,15 @@ import {StackParams} from "../../types/type";
 import {Text, View} from "react-native";
 import PinkButton from "../../components/common/PinkButton";
 import Spacer from "../../components/common/Spacer";
+import {handleGetMyGroup} from "../../utils/pb";
+import {useRecoilValue} from "recoil";
+import {MyAttendGroupsState} from "../../global/recoil";
 // import NaverMapView from "react-native-nmap";
+/* <NaverMapView style={{flex: 1}} /> */
 
 export default function GroupScreen() {
     const navigation = useNavigation<NavigationProp<StackParams>>();
-    const groupList = [];
+    const myGroup = useRecoilValue(MyAttendGroupsState);
 
     function onClickAdd() {
         navigation.navigate("AddGroup");
@@ -17,8 +21,7 @@ export default function GroupScreen() {
 
     return (
         <ScreenBase onClickAdd={onClickAdd}>
-            {/* <NaverMapView style={{flex: 1}} /> */}
-            {groupList.length ? (
+            {myGroup.length ? (
                 <></>
             ) : (
                 <View
@@ -46,7 +49,10 @@ export default function GroupScreen() {
                     </Text>
                     <Spacer height={30} />
                     <View style={{width: "50%"}}>
-                        <PinkButton text="그룹 만들기" />
+                        <PinkButton
+                            text="그룹 만들기"
+                            onPress={handleGetMyGroup}
+                        />
                     </View>
                 </View>
             )}

@@ -1,11 +1,14 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import React from "react";
+import React, {useEffect} from "react";
 import HomeScreen from "./tab/Home";
 import GroupScreen from "./tab/Group";
 import SettingScreen from "./tab/Setting";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {Text} from "react-native";
+import {useRecoilState} from "recoil";
+import {MyAttendGroupsState} from "../global/recoil";
+import {handleGetMyGroup} from "../utils/pb";
 
 type TabList = {
     Home: undefined;
@@ -16,6 +19,7 @@ type TabList = {
 const Tab = createBottomTabNavigator<TabList>();
 
 export default function MainTab() {
+    const [_, setMyAttendGroups] = useRecoilState(MyAttendGroupsState);
     function getIcon(name: string, focused: boolean) {
         if (name === "Home") {
             return focused ? "home" : "home-outline";
@@ -31,6 +35,13 @@ export default function MainTab() {
         else if (name === "Setting") return "설정";
         else return "그룹";
     }
+
+    useEffect(() => {
+        (async () => {
+            const getMyAttendGroups = await handleGetMyGroup();
+            setMyAttendGroups(getMyAttendGroups);
+        })();
+    }, [setMyAttendGroups]);
 
     return (
         <Tab.Navigator

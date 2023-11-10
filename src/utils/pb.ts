@@ -166,7 +166,7 @@ export async function handleAddGroup(
             attendUsers: [auth.model.id],
         })) as GroupType;
 
-        setGroup(prev => [...prev, newGroups]);
+        setGroup(prev => [newGroups, ...prev]);
 
         navigation.goBack();
     } catch (error: any) {

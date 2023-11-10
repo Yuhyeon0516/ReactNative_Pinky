@@ -4,10 +4,15 @@ import Header from "../../components/popup/Header";
 import PinkButton from "../../components/common/PinkButton";
 import GroupInputBox from "../../components/popup/GroupInputBox";
 import Spacer from "../../components/common/Spacer";
+import {handleAddGroup} from "../../utils/pb";
+import {NavigationProp, useNavigation} from "@react-navigation/native";
+import {StackParams} from "../../types/type";
 
 export default function AddGroup() {
     const [groupName, setGroupName] = useState("");
-    const [personnel, setPersonnel] = useState("");
+    const [maxPersonnel, setMaxPersonnel] = useState("");
+
+    const navigation = useNavigation<NavigationProp<StackParams>>();
 
     return (
         <View
@@ -30,17 +35,22 @@ export default function AddGroup() {
                 <Spacer height={15} />
 
                 <GroupInputBox
-                    value={personnel}
-                    onChangeText={setPersonnel}
+                    value={maxPersonnel}
+                    onChangeText={setMaxPersonnel}
                     title="인원수"
-                    placeHolder="최대 인원수를 입력해주세요!"
+                    placeHolder="그룹의 최대 인원수를 입력해주세요!"
                     keyboardType="number-pad"
                 />
 
                 <Spacer height={15} />
 
                 <View style={{width: "50%", alignSelf: "center"}}>
-                    <PinkButton text="생성하기" />
+                    <PinkButton
+                        text="생성하기"
+                        onPress={() =>
+                            handleAddGroup(groupName, maxPersonnel, navigation)
+                        }
+                    />
                 </View>
             </ScrollView>
         </View>

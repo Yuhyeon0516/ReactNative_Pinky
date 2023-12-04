@@ -8,7 +8,7 @@ export default function PromiseItem({promise}: {promise: PromiseType}) {
         <TouchableOpacity
             style={{
                 flex: 1,
-                height: 200,
+                height: 120,
                 marginHorizontal: 20,
                 borderWidth: 2,
                 borderColor: "#e8aced",
@@ -17,17 +17,19 @@ export default function PromiseItem({promise}: {promise: PromiseType}) {
                 padding: 20,
                 flexDirection: "column",
                 gap: 5,
+                justifyContent: "center",
             }}>
-            <Text>{promise.groupId}</Text>
+            <Text>그룹명: {promise.groupId}</Text>
             <View style={{flexDirection: "row"}}>
-                <Ionicons name="location-outline" />
-                <Text>
-                    {promise.location.lag}, {promise.location.lng}
-                </Text>
+                <Ionicons
+                    name="location-outline"
+                    style={{marginRight: 5, fontSize: 20}}
+                />
+                <Text>영통 시청 앞</Text>
             </View>
-            <Text>{promise.time.toLocaleString()}</Text>
-            <Text>{promise.trackingStartTime.toLocaleTimeString()}</Text>
-            <Text>{promise.trakingEndTime.toLocaleTimeString()}</Text>
+            <Text>약속 일자: {promise.time.toLocaleString()}</Text>
+            {/* <Text>{promise.trackingStartTime.toLocaleTimeString()}</Text>
+            <Text>{promise.trakingEndTime.toLocaleTimeString()}</Text> */}
         </TouchableOpacity>
     );
 }

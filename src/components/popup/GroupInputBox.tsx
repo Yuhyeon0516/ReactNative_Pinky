@@ -32,6 +32,7 @@ export default function GroupInputBox({
                     fontSize: 18,
                     color: "black",
                     fontWeight: "bold",
+                    width: 70,
                 }}>
                 {title}
             </Text>

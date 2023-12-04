@@ -13,17 +13,17 @@ export default function HomeScreen() {
     const navigation = useNavigation<NavigationProp<StackParams>>();
     const promiseList: PromiseType[] = [
         // TODO: server에서 data 불러오는것으로 변경
-        // {
-        //     location: {
-        //         lng: 33,
-        //         lag: 33,
-        //     },
-        //     groupId: "123",
-        //     time: new Date(),
-        //     alarmTime: new Date(),
-        //     trackingStartTime: new Date(),
-        //     trakingEndTime: new Date(),
-        // },
+        {
+            location: {
+                lng: 33,
+                lag: 33,
+            },
+            groupId: "베스트 프랜드",
+            time: new Date(),
+            alarmTime: new Date(),
+            trackingStartTime: new Date(),
+            trakingEndTime: new Date(),
+        },
         // {
         //     location: {
         //         lng: 34,

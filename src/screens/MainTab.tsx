@@ -83,7 +83,7 @@ export default function MainTab() {
             }}>
             <Tab.Screen name="Home" component={HomeScreen} />
             <Tab.Screen name="Group" component={GroupScreen} />
-            <Tab.Screen name="Setting" component={SettingScreen} />
+            {/* <Tab.Screen name="Setting" component={SettingScreen} /> */}
         </Tab.Navigator>
     );
 }

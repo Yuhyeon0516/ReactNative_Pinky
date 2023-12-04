@@ -11,7 +11,6 @@ import {
 import React, {useState} from "react";
 import Spacer from "../components/common/Spacer";
 import PinkButton from "../components/common/PinkButton";
-import VerticalLine from "../components/common/VerticalLine";
 import Google from "../components/login/Google";
 import Kakao from "../components/login/Kakao";
 import {NavigationProp, useNavigation} from "@react-navigation/native";
@@ -134,17 +133,6 @@ export default function Login() {
                         justifyContent: "center",
                         gap: 10,
                     }}>
-                    <TouchableOpacity onPress={() => {}}>
-                        <Text
-                            style={{
-                                color: "gray",
-                                fontSize: 14,
-                                fontWeight: "bold",
-                            }}>
-                            비밀번호 찾기
-                        </Text>
-                    </TouchableOpacity>
-                    <VerticalLine size={1} />
                     <TouchableOpacity onPress={onPressRegister}>
                         <Text
                             style={{
